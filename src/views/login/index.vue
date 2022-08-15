@@ -39,9 +39,11 @@
       </el-form-item>
 
       <el-button
+        :loading="loading"
         class="loginBtn"
         type="primary"
         style="width: 100%; margin-bottom: 30px"
+        @click="login"
       >登录</el-button>
 
       <div class="tips">
@@ -68,8 +70,9 @@ export default {
       passwordType: 'password',
       loginForm: {
         mobile: 13800000002,
-        password: 123456
+        password: '123456'
       },
+      loading: false,
       rules: {
         mobile: [
           { required: true, message: '请输入手机号码' },
@@ -101,6 +104,20 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
+    },
+    // 登录
+    async login() {
+      try {
+        await this.$refs.loginForm.validate()
+        this.loading = true
+        // 发请求提交
+        await this.$store.dispatch('user/login', this.loginForm)
+        this.$router.push('/')
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
