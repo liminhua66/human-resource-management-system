@@ -19,7 +19,7 @@
             src="http://destiny001.gitee.io/image/monkey_02.jpg"
             class="user-avatar"
           >
-          <span>用户名</span>
+          <span>{{ username }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -46,7 +46,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar'])
+    ...mapGetters(['sidebar', 'avatar', 'username'])
   },
   methods: {
     toggleSideBar() {
