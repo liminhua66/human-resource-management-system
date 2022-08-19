@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // 不处于登录状态
-    if (whileList.includes.to.path) {
+    if (whileList.includes(to.path)) {
       // 如果去往login 或 404，直接放行
       next()
     } else {
