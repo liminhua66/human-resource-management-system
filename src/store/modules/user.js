@@ -1,10 +1,11 @@
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, geUserDetailById } from '@/api/user'
 import { setToken, getToken, removeToken } from '@/utils/auth'
 export default {
   namespaced: true,
   state: {
     token: getToken(),
-    userInfo: {}
+    userInfo: {},
+    hrsaasTime: 0
   },
   mutations: {
     setToken(state, payload) {
@@ -20,6 +21,9 @@ export default {
     },
     removeUserinfo(state) {
       state.userInfo = {}
+    },
+    setHrsaasTime(state, payload) {
+      state.hrsaasTime = payload
     }
   },
   actions: {
@@ -27,6 +31,7 @@ export default {
       try {
         const res = await login(data)
         commit('setToken', res)
+        commit('setHrsaasTime', +new Date())
         setToken(res)
       } catch (error) {
         console.log(error)
@@ -34,8 +39,14 @@ export default {
     },
     async getUserInfo({ commit }) {
       const res = await getUserInfo()
-      console.log(res)
-      commit('setUserInfo', res)
+      const baseInfo = await geUserDetailById(res.userId)
+      const info = { ...res, ...baseInfo }
+      console.log(info)
+      commit('setUserInfo', info)
+    },
+    logout({ commit }) {
+      commit('removeToken')
+      commit('removeUserinfo')
     }
   }
 }

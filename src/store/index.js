@@ -4,8 +4,8 @@ import getters from './getters'
 import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
-
 Vue.use(Vuex)
+import createPersistedState from 'vuex-persistedstate'
 
 const store = new Vuex.Store({
   modules: {
@@ -13,7 +13,16 @@ const store = new Vuex.Store({
     settings,
     user
   },
-  getters
+  getters,
+  plugins: [createPersistedState({
+    reducer(state) {
+      return {
+        user: {
+          hrsaasTime: state.user.hrsaasTime
+        }
+      }
+    }
+  })]
 })
 
 export default store

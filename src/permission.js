@@ -3,9 +3,12 @@ import store from '@/store'
 
 const whileList = ['/login', '/404']
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   // 判断有无token
   if (store.getters.token) {
+    if (!store.getters.userId) {
+      store.dispatch('user/getUserInfo')
+    }
     // 当去往的页面不是 login 时，跳转至首页
     // console.log('to', to)
     if (to.path === '/login') {

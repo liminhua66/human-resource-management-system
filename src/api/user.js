@@ -19,5 +19,17 @@ export function getUserInfo() {
   })
 }
 
+/**
+ * 获取额外的用户信息
+ * @param {String} id 用户ID
+ * @returns Promise
+ */
+export function geUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`,
+    method: 'GET'
+  })
+}
+
 export function logout() {
 }
