@@ -16,20 +16,25 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import * as directives from '@/directives'
+
+import * as filters from '@/filters' // 引入工具类
+// 注册全局的过滤器
+Object.keys(filters).forEach(key => {
+  // 注册过滤器
+  Vue.filter(key, filters[key])
+})
+
 Object.keys(directives).forEach(ele => {
   Vue.directive(ele, directives[ele])
 })
-
-/* if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-} */
-
-// set ElementUI lang to EN
-// Vue.use(ElementUI, { locale })
-// 如果想要中文版 element-ui，按如下方式声明
+// 注册全局组件
+import components from '@/components'
+Vue.use(components)
 
 Vue.use(ElementUI)
+
+import Print from 'vue-print-nb'
+Vue.use(Print)
 
 Vue.config.productionTip = false
 

@@ -1,18 +1,24 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <UploadImg :before-upload-check="beforeUploadCheck" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  mounted() {
+  },
+  methods: {
+    beforeUploadCheck() {
+      return true
+    }
   }
 }
 </script>

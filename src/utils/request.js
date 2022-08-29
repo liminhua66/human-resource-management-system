@@ -21,7 +21,7 @@ service.interceptors.request.use(config => {
     // 有token时，检查是否超时
     if (isCheckOut()) {
       store.dispatch('user/logout')
-      store.router.push('/login')
+      router.push('/login')
       Message.error('接口超时')
       return Promise.reject(new Error('接口超时'))
     }

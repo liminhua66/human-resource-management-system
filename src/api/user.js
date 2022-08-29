@@ -24,10 +24,9 @@ export function getUserInfo() {
  * @param {String} id 用户ID
  * @returns Promise
  */
-export function geUserDetailById(id) {
+export function getUserDetailById(id) {
   return request({
-    url: `/sys/user/${id}`,
-    method: 'GET'
+    url: `/sys/user/${id}`
   })
 }
 
