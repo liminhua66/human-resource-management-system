@@ -44,7 +44,7 @@
             <el-button type="text" size="small">转正</el-button>
             <el-button type="text" size="small">调岗</el-button>
             <el-button type="text" size="small">离职</el-button>
-            <el-button type="text" size="small">角色</el-button>
+            <el-button type="text" size="small" @click="role(row.id)">角色</el-button>
             <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -71,6 +71,8 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <!-- 权限 -->
+    <assign-role ref="assignRole" v-model="value" :user-id="currentUserId" />
   </div>
 </template>
 
@@ -80,10 +82,10 @@ import EmployeeNum from '@/api/constant/employees'
 import addEmploysee from './components/add-employsee.vue'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import AssignRole from './components/assign-role.vue'
 export default {
   name: 'Hrsaas1Index',
-  components: { addEmploysee },
-
+  components: { addEmploysee, AssignRole },
   data() {
     return {
       loading: false,
@@ -94,7 +96,9 @@ export default {
       },
       total: 0, // 总数
       showDialog: false,
-      showCodeDialog: false
+      showCodeDialog: false,
+      value: false,
+      currentUserId: ''
     }
   },
 
@@ -192,6 +196,11 @@ export default {
           // 如果转化的二维码后面信息 是一个地址的话 就会跳转到该地址 如果不是地址就会显示内容
         })
       }
+    },
+    role(id) {
+      this.currentUserId = id
+      this.value = true
+      this.$refs.assignRole.getRoleList()
     }
   }
 }
